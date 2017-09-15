@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 
 @section('content')
@@ -48,7 +48,7 @@
 
     <div class="form-group">
 
-        {!! Form::submit('Create Post', ['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Edit player', ['class'=>'btn btn-primary']) !!}
 
     </div>
 

@@ -204,6 +204,7 @@ class Match extends Model
         $match['team_1']=$result[0]->id;
         $match['team_2']=$result[1]->id;
 
+        //with for  can be 4 line less
         for($i=1;$i<6; $i++){
             $player1 ='1_player'.$i.'_id';
             $player='player'.$i.'_id';
@@ -215,7 +216,9 @@ class Match extends Model
             $match[$player1]=$result[1]->$player;
         }
         $match->update();
+        return $match;
     }
+
 
     public function photo(){
 

@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{route('users.index')}}">WTF</a>
+                    <a href="{{route('home')}}">Home</a>
                     <a href="https://laracasts.com">How it works?</a>
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://forge.laravel.com">Ranking</a>

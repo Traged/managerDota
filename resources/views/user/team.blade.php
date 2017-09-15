@@ -18,6 +18,7 @@
         </div>
 
     </div>
+
     <a href="{{route('match.teams', $team->id)}}"><button type="button">Scrim</button></a>
     <a href="{{route('scrim.teams', $team->id)}}"><button type="button">Match</button></a>
 

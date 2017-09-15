@@ -21,6 +21,14 @@ class Team extends Model
 
 
     ];
+    public function allplayers($team){
+        for($i=1; $i<6; $i++){
+            $player= 'player'.$i.'_id';
+            if($team->$player==0)
+                return false;
+        }
+        return true;
+    }
 
     public function user(){
 

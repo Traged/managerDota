@@ -39,7 +39,8 @@ class MatchmakingController extends Controller
 
         $time= $newLog[2];
 
-        return view('user.match', compact( 'winner', 'log', 'score', 'time'));
+
+        return view('user.match', compact( 'match'));
     }
     public function scrim($id)
     {
@@ -57,5 +58,17 @@ class MatchmakingController extends Controller
         $score = $newLog[0];
         $time= $newLog[2];
         return view('user.scrim', compact( 'winner', 'log', 'score', 'time'));
+    }
+
+    public function allmatches(){
+        $matches= Match::all();
+        $teams= Team::all();
+        return view('user.matches', compact('matches', 'match', 'teams', 'team'));
+
+    }
+
+    public function showmatch($id){
+
+
     }
 }

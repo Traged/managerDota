@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 
 @section('content')
@@ -41,12 +41,12 @@
 
     <div class="form-group">
         {!! Form::label('sub_only', 'sub_only:') !!}
-        {!! Form::select('sub_only', array(1=> 'Sub Only', 0=> 'Normal'), ['class'=>'form-control']) !!}
+        {!! Form::select('sub_only', array( 0=> 'Normal', 1=> 'Sub Only'), ['class'=>'form-control']) !!}
     </div>
 
     <div class="form-group">
 
-        {!! Form::submit('Create Post', ['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Create Player', ['class'=>'btn btn-primary']) !!}
 
     </div>
 

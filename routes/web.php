@@ -45,6 +45,7 @@ Route::get('players', ['as'=>'show.players', 'uses'=>'UserTeamController@show_pl
 //Matches
 Route::get('match/{team}', ['as'=>'match.teams', 'uses'=>'MatchmakingController@runmatch']);
 Route::get('scrim/{team}', ['as'=>'scrim.teams', 'uses'=>'MatchmakingController@scrim']);
+Route::get('allmatches', ['as'=>'allmatches', 'uses'=>'MatchmakingController@allmatches']);
 
 //  ADMIN PART
 

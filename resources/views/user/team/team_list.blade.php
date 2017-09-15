@@ -16,6 +16,9 @@
 
     @if($teams)
         @foreach($teams as $team)
+                @if($team->allplayers($team))
+                    @if($user->team_id!=$team->id)
+
             <tr>
                 <td><h3><a href="{{route('team.show', $team->id)}}">{{$team->name}}</a></h3></td>
                 <td><img height="50" src="{{$team->photo ? $team->photo->file: 'no team photo'}}" alt=""></td>
@@ -35,6 +38,8 @@
                         {{--{!! Form::close() !!}--}}
 
             </tr>
+        @endif
+    @endif
 
 
         @endforeach

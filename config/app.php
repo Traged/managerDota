@@ -178,7 +178,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         //laraAdmin
-        Dwij\Laraadmin\LAProvider::class,
+
 
     ],
 

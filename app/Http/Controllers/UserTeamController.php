@@ -23,7 +23,9 @@ class UserTeamController extends Controller
 //        dd($that);
         if($that ){}else
             return view('user/team/new_team');
-        $team = Team::findOrFail($user)->first();
+//            dd($user);
+        $team = Team::findOrFail($user->team_id);
+//        dd($team);
 
 //        $nameofteam = Team::findOrFail($user)->first();
 
@@ -139,7 +141,8 @@ class UserTeamController extends Controller
      */
     public function edit($id)
     {
-        //
+        $team = Team::findOrFail($id);
+        return view('user.team.edit', compact('team'));
     }
 
     /**
@@ -151,7 +154,27 @@ class UserTeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        $team= Team::findOrFail($id);
+
+
+        if($file = $request->file('photo_id')){
+
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('images', $name);
+
+            $photo = Photo::create(['file'=>$name]);
+
+
+
+            $input ['photo_id'] = $photo->id;
+
+        }
+        $team->update($input);
+        return redirect('/user/team');
+
+
     }
 
     /**
@@ -208,14 +231,17 @@ class UserTeamController extends Controller
             $i++;
         }
         $team->$position=0;
+        $team->spirit_score=0;
+        $team->scrim_score=0;
         $team->update();
         return redirect()->route('team.index');
 
     }
 
     public function show_teams(){
+        $user = Auth::user();
         $teams= Team::all();
-        return view('user/team/team_list', compact('teams', 'team'));
+        return view('user/team/team_list', compact('teams', 'team', 'user'));
     }
     public function show_player($id)
     {
