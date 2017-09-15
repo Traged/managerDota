@@ -1,3 +1,9 @@
+
+Hello everyone, this is personal project Dota2Manger (footbal manager type game for dota 2). We are building it on framework called laravel. Anyone willing to put in some work feel free to message me.
+
+
+
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
