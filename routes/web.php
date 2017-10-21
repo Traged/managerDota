@@ -11,12 +11,22 @@
 |
 */
 
+use App\News;
+use App\Player;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () {return view('welcome');});
+Route::get('/about', function () {return view('info.about');})->name('about');
+Route::get('/news', function () {
+    $news = News::all();
+    if(count($news)==0)$news ='1';
+    return view('info.news', compact('news'));})->name('news');
+Route::get('/players', function () {
+    $players=Player::all();
+    return view('info.players', compact('players'));})->name('players');
+Route::get('/rankings', function () {return view('info.rankings');})->name('rankings');
+
 
 Auth::routes();
 
@@ -40,7 +50,7 @@ Route::post('user/team/insert',['as'=>'insert.player','uses'=>'UserTeamControlle
 Route::get('user/kick', ['as'=>'kick.player', 'uses'=>'UserTeamController@kick_player']);
 Route::get('user/teams', ['as'=>'team.list', 'uses'=>'UserTeamController@show_teams']);
 Route::get('user/player/{player}', ['as'=>'show.player', 'uses'=>'UserTeamController@show_player' ]);
-Route::get('players', ['as'=>'show.players', 'uses'=>'UserTeamController@show_players']);
+Route::get('user/players', ['as'=>'show.players', 'uses'=>'UserTeamController@show_players']);
 
 //Matches
 Route::get('match/{team}', ['as'=>'match.teams', 'uses'=>'MatchmakingController@runmatch']);

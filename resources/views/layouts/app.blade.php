@@ -106,7 +106,10 @@
             </div>
         </nav>
 
-
+        @if (Auth::guest())
+            {{--<div class="col-md-3"> <div class="panel panel-default"><div class="panel-body">You really should create account and start playing!--}}
+            {{--It is not time consuming and you can do it while you Q in Dota2.</div></div></div>--}}
+        @else
         <div class="col-md-3">
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="{{route('team.index')}}">Your team </a></li>
@@ -114,12 +117,14 @@
                 <li class="active"><a href="{{route('show.players')}}">Players</a></li>
             </ul>
         </div>
+        @endif
 
 
 <div class="col-md-6">
 
         @yield('content')
     </div></div>
+
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

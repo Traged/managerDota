@@ -147,17 +147,8 @@ class Match extends Model
         $team_1= Team::findOrFail($team_id);
         $team_2= Team::findOrFail($enemy_id);
 
-//        $log1= $player.' got picked of by '.$player2;
 
-        $fragnumber = rand(9,60);
-        $message= [
-            ' picked of ',
-            ' won teamfight by killing ',
-            ' saved the day by taking life from ',
-            ' baited ouf beautifull kill on ',
-            ' Jebaited ',
-            ' just in second he killed ',
-            ' after painfull chase he finaly took life from']; // 7 posibilities
+        $massfights = rand(3,12);
         $log= 'After first blood: ';
         $min=5;
         $sec=0;
@@ -165,36 +156,82 @@ class Match extends Model
         $kills2=0;
         $time=0;
 
-        for ($i=1; $i<$fragnumber; $i++){
-            $id = rand(1,2);
-            $player = rand(1,5);
-            $team = 'team_'.$id;
-            $player1 = 'player'.$player.'_id';
 
-            //not getting killed by teammates
-            if($id==1){
-                $kills1++;
-                $id2=2;}
-            else{
-                $kills2++;
-                $id2=1;}
-            $team2 = 'team_'.$id2;
-            $player2 = rand(1,5);
-            $player2 = 'player'.$player2.'_id';
+
+        for ($i=1; $i<$massfights; $i++){
+            $massfight = Match::massFightGenerator($team_1, $team_2);
+
+            $deaths= $massfight[0]+$massfight[2];
+            $kills1= $kills1 + $massfight[0];
+            $kills2= $kills2 + $massfight[2];
 
             //generating time
-            $min= $min+ rand(1,3);
+            $min= $min+ rand(3,6);
             $sec= rand(0,59);
             if($sec<10)
                 $sec= '0'.$sec;
 
-            $log1= Player::findOrFail($$team->$player1)->name.$message[rand(0,6)].Player::findOrFail($$team2->$player2)->name;
+            //log for one fight
+            $players1 = '';
+            $players2 = '';
+
+            foreach ($massfight[1] as $id){
+                $players1 = $players1.' '.Player::findOrFail($id)->name;
+            }
+            foreach ($massfight[3] as $id){
+                $players2 = $players2.' '.Player::findOrFail($id)->name;
+            }
+
+
+            //add sufix respons adn prefix
+            $log1= 'Dead ppl '.$players1.' massfight '.$players2.'  dead as well.';
+
+            //connecting log
             $log= $log.' '.'<br>At: '.$min.':'.$sec.' '.$log1;
-            if($i==($fragnumber-1))
-                $time=$min.':'.$sec;
+            if($i==($massfights-1))
+                $time=($min+2).':'.$sec;
         }
         $score = $kills1.':'.$kills2;
         return [$score, $log, $time];
+    }
+
+    public function massFightGenerator($team_1, $team_2){
+        //massfight kill count max - 5-5 lowest 0-0
+
+        $t1_deaths = rand(0,5);
+        $t2_deaths = rand(0,5);
+        //choosing players
+        $players1= [];
+        $players2= [];
+
+
+        for($i=0; $i<$t1_deaths;){
+            $n= rand(1,5);
+                if(!in_array($n, $players1)) {
+                    $i++;
+                    $players1 [] = $n;
+                }
+        }
+
+        for($i=0; $i<$t2_deaths;){
+            $n= rand(1,5);
+            if(!in_array($n, $players2)) {
+                $i++;
+                $players2 [] = $n;
+            }
+        }
+        $score = '';
+        for($id=1; $id<3; $id++){
+        $deaths = 't'.$id.'_deaths';
+        for($i=0; $i<=5; $i++){
+            if($$deaths==$i)
+                $score = $score.$i;
+        }if($id==1) $score = $score.'-';}
+
+
+        return([$t1_deaths, $players1, $t2_deaths, $players2, $score]);
+
+
     }
 
     public function create_winner($result, $log){
